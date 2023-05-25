@@ -1,0 +1,66 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles.css">
+    <title>North West Corner Rule</title>
+</head>
+
+<body>
+
+    <!-- MAIN -->
+    <main class="container">
+        <!-- SIDE SECTION -->
+        <section class="side">
+            <!-- <div><a class="anchor active" href="">Home</a></div> -->
+            <!-- <div class="txt">TRANSPORTATION</div> -->
+            <ul class="ul">
+                <li class="li">
+                    <a class="anchor" href="/">Home</a>
+                </li>
+                <li class="li">
+                    <a class="anchor" href="#">North West Corner Rule</a>
+                </li>
+                <li class="li">
+                    <a class="anchor" href="#">Least Cost Rule</a>
+                </li>
+                <li class="li">
+                    <a class="anchor" href="../north_west/north.html">Stepping Stone Using (NWCR)</a>
+                </li>
+                <li class="li">
+                    <a class="anchor active" href="#">Stepping Stone Using (LCR)</a>
+                </li>
+            </ul>
+        </section>
+        <!-- ############ -->
+        <!-- MAIN SECTION -->
+        <section class="main_container">
+            <h1 style="text-align: center;">Method of finding Optimal Solution in transportation problem using Stepping
+                Stone Method</h1>
+            <div class="sub_main">
+                <div class="sd1">
+                    <!-- <small>Generate No of ROW and COLUMN </small> -->
+                    <input type="number" id="supply" class="in_input" placeholder="No of Row">
+                    <input type="number" id="demand" class="in_input" placeholder="No of Column">
+                    <button id="calculate">Generate</button>
+                    <br />
+                    <br />
+                    <div id="container2"></div>
+                </div>
+                <div class="sd2">
+                    <table id="table"></table>
+                    <div id="container"></div>
+                    <div id="cont_table"></div>
+                </div>
+            </div>
+        </section>
+        <!-- ############ -->
+    </main>
+
+
+    <script src="./least.js"></script>
+</body>
+
+</html>
