@@ -5,6 +5,7 @@ const table = document.getElementById('table');
 const container = document.getElementById('container');
 const container2 = document.getElementById('container2');
 const cont_table = document.getElementById('cont_table');
+const total_dis = document.getElementById('total_dis');
 
 
 calculate.addEventListener('click', Cal)
@@ -16,100 +17,107 @@ let staySupply = [];
 let stayDemand = [];
 let westCosts = [];
 let allocation;
-let disAllocation;
 
 function Cal() {
 
     table.innerHTML = ''
+    container.innerHTML = ''
+    // cont_table.children = ''
 
     const supply = parseInt(supplyInput.value, 10);
     const demand = parseInt(demandInput.value, 10);
 
-    const numRow = supply + 2;
-    const numCol = demand + 2;
+    if(supplyInput.value == '' || demandInput.value == '') {
+        alert('Please Input Rows and Columns')
+    } else {
+        
+            const numRow = supply + 2;
+            const numCol = demand + 2;
+        
+        
+            // Initialize costs and allocations arrays
+            for (let i = 0; i < numRow; i++) {
+                costs.push([]);
+                // allocations.push([]);
+                for (let j = 0; j < numCol; j++) {
+                    costs[i][j] = 0;
+                    // allocations[i][j] = 0;
+                }
+            }
+        
+            // Create the table
+        
+            for (let i = 0; i < numRow; i++) {
+                const row = table.insertRow()
+        
+                for (let j = 0; j < numCol; j++) {
+        
+                    const cell = row.insertCell()
+        
+                    if (i === 0 && j > 0 && j < numCol - 1) {
+                        cell.innerHTML = 'D' + j;
+                    }
+        
+                    if (i > 0 && i < numRow - 1 && j === 0) {
+                        cell.innerHTML = 'S' + i
+                    }
+        
+                    if (j === numCol - 1 && i === 0) {
+                        cell.innerHTML = 'Supply'
+                    }
+                    if (j === 0 && i === numRow - 1) {
+                        cell.innerHTML = 'Demand'
+                    }
+                    if (i === numRow - 1 && j === numCol - 1) {
+                        // Total
+                        cell.innerHTML = ''
+                    }
+        
+        
+                    if (i === numRow - 1 && j > 0 && j < numCol - 1) {
+                        const input = document.createElement('input');
+                        console.dir(input)
+                        input.type = 'number';
+                        input.size = 5;
+                        cell.appendChild(input)
+        
+                        input.addEventListener('input', function () {
+                            costs[i][j] = parseInt(input.value, 10) || 0;
+                        })
+                    }
+        
+                    if (j === numCol - 1 && i > 0 && i < numRow - 1) {
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.size = 5;
+                        cell.appendChild(input)
+        
+                        input.addEventListener('input', function () {
+                            costs[i][j] = parseInt(input.value, 10) || 0;
+                        })
+                    }
+        
+                    if (i > 0 && j > 0 && i < numRow - 1 && j < numCol - 1) {
+                        const input = document.createElement('input');
+                        input.type = 'number';
+                        input.size = 5;
+                        cell.appendChild(input)
+        
+                        input.addEventListener('input', function () {
+                            costs[i][j] = parseInt(input.value, 10) || 0;
+                        })
+                    }
+        
+                }
+            }
+        
+            // button.innerHTML = 'Solve';
+        
+            container.innerHTML = `<button id='button'>Solve</button>`
+            const button = document.getElementById('button');
+            button.addEventListener('click', Solve)
 
-
-    // Initialize costs and allocations arrays
-    for (let i = 0; i < numRow; i++) {
-        costs.push([]);
-        // allocations.push([]);
-        for (let j = 0; j < numCol; j++) {
-            costs[i][j] = 0;
-            // allocations[i][j] = 0;
-        }
     }
-
-    // Create the table
-
-    for (let i = 0; i < numRow; i++) {
-        const row = table.insertRow()
-
-        for (let j = 0; j < numCol; j++) {
-
-            const cell = row.insertCell()
-
-            if (i === 0 && j > 0 && j < numCol - 1) {
-                cell.innerHTML = 'D' + j;
-            }
-
-            if (i > 0 && i < numRow - 1 && j === 0) {
-                cell.innerHTML = 'S' + i
-            }
-
-            if (j === numCol - 1 && i === 0) {
-                cell.innerHTML = 'Supply'
-            }
-            if (j === 0 && i === numRow - 1) {
-                cell.innerHTML = 'Demand'
-            }
-            if (i === numRow - 1 && j === numCol - 1) {
-                // Total
-                cell.innerHTML = ''
-            }
-
-
-            if (i === numRow - 1 && j > 0 && j < numCol - 1) {
-                const input = document.createElement('input');
-                console.dir(input)
-                input.type = 'number';
-                input.size = 5;
-                cell.appendChild(input)
-
-                input.addEventListener('input', function () {
-                    costs[i][j] = parseInt(input.value, 10) || 0;
-                })
-            }
-
-            if (j === numCol - 1 && i > 0 && i < numRow - 1) {
-                const input = document.createElement('input');
-                input.type = 'number';
-                input.size = 5;
-                cell.appendChild(input)
-
-                input.addEventListener('input', function () {
-                    costs[i][j] = parseInt(input.value, 10) || 0;
-                })
-            }
-
-            if (i > 0 && j > 0 && i < numRow - 1 && j < numCol - 1) {
-                const input = document.createElement('input');
-                input.type = 'number';
-                input.size = 5;
-                cell.appendChild(input)
-
-                input.addEventListener('input', function () {
-                    costs[i][j] = parseInt(input.value, 10) || 0;
-                })
-            }
-
-        }
-    }
-
-    // button.innerHTML = 'Solve';
-
-    container.innerHTML = `<button id='button'>Solve</button>`
-    const button = document.getElementById('button');
-    button.addEventListener('click', Solve)
 }
 
 
@@ -173,9 +181,10 @@ function findLeastCostPath(costMatrix, supply, demand) {
 
     
     const cont2_div = document.createElement('div');
-    cont2_div.classList = 'span-text';
-    cont2_div.innerHTML = 'Stepping Stone Ans: ' + totalCost;
-    container2.appendChild(cont2_div)
+    // cont2_div.classList = 'span-text';
+    // cont2_div.innerHTML = 'Stepping Stone Ans: ' + totalCost;
+    container2.innerHTML += `<div class="span-text">Stepping Stone Ans:  ${totalCost}</div>`
+    // container2.appendChild(cont2_div)
 
 
     // for (let i = 0; i < num; i++) {
@@ -234,15 +243,23 @@ function northWestCornerMethod(supply, demand, cost) {
 
     let sum = 0;
     let vvv
+    let total = `Total: `
+    total_dis.innerHTML += total
 
     for (let i = 0; i < westCosts.length; i++) {
         for (let j = 0; j < allocation.length; j++) {
-            const span = document.createElement('span')
-            span.classList = 'span-text';
-            const total = [i] == 0 && [j] == 0 ? `Total: ` : ''
-            vvv = ('( ' + westCosts[i][j] + ' * ' + allocation[i][j] + ' )');
-            vvv += j < allocation.length || i < westCosts - 1 ? '+' : ''
-            cont_table.appendChild(span).innerHTML = total + vvv
+            // const span = document.createElement('span')
+            // span.classList = 'span-text';
+            if(westCosts[i][j] != 0) {
+                vvv = ('( ' + westCosts[i][j] + ' * ' + allocation[i][j] + ' )');
+                total_dis.innerHTML += vvv
+                if(i < westCosts.length - 1) {
+                    // let ppp = '+'
+                    total_dis.innerHTML += '+'
+
+                }
+            }
+            // cont_table.appendChild(span).innerHTML = total + vvv
             // container2.
             sum += westCosts[i][j] * allocation[i][j]
             console.log(sum)
@@ -251,10 +268,11 @@ function northWestCornerMethod(supply, demand, cost) {
     }
 
 
-    const cont2_div = document.createElement('div');
-    cont2_div.classList = 'span-text';
-    cont2_div.innerHTML = 'North West Ans: ' + sum;
-    container2.appendChild(cont2_div)
+    // const cont2_div = document.createElement('div');
+    // cont2_div.classList = 'span-text';
+    // cont2_div.innerHTML = 'North West Ans: ' + sum;
+    // container2.appendChild(cont2_div)
+    container2.innerHTML = `<div class="span-text">North West Ans:  ${sum}</div>`
 
 
 
@@ -284,8 +302,9 @@ function northWestTable(supply, demand, cost, allocation) {
 
     }
 
-    console.log({ 'northwesttable': potArray })
     const table = document.createElement('table');
+
+    table.innerHTML = ''
 
     for (let i = 0; i < numRow; i++) {
         const row = table.insertRow()
@@ -335,7 +354,7 @@ function northWestTable(supply, demand, cost, allocation) {
     }
 
 
-    cont_table.appendChild(table)
+    cont_table.innerHTML = `<table>${table.innerHTML}</table>`
 
 }
 
@@ -345,6 +364,8 @@ function Solve() {
     westCosts = [];
     westSupply = [];
     westDemand = [];
+    staySupply = [];
+    stayDemand = []
 
     let counter = 0;
 

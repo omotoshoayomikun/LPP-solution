@@ -180,6 +180,7 @@ button {
     font-size: 19px;
     font-weight: 700;
     margin-top: 10px;
+    /* display: inline-flex; */
 }
 
 #container2 {
@@ -204,6 +205,12 @@ button {
 }
 .sd2{
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#cont_table {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -234,8 +241,59 @@ table input {
     font-family: montserrat_regular , serif;
 }
 
+.menu_btn__burger {
+    position: relative;
+    right: 0;
+    /* top: 14px; */
+    width: 28px;
+    height: 3px;
+    background-color: #000;
+    transition: all 0.5s ease-in-out;
+    cursor: pointer;
+  }
+  .menu_btn__burger::before {
+    content: "";
+    width: 28px;
+    height: 3px;
+    position: absolute;
+    top: -8px;
+    background-color: #000;
+    transition: all 0.5s ease-in-out;
+  }
+  .menu_btn__burger::after {
+    content: "";
+    width: 20px;
+    height: 3px;
+    position: absolute;
+    top: 8px;
+    background-color: #000;
+    transition: all 0.5s ease-in-out;
+  }
+  .menu_btn__burger.open {
+    transform: rotate(720deg);
+    background: transparent;
+  }
+  .menu_btn__burger.open::before {
+    transform: rotate(45deg) translate(5px, 8px);
+  }
+  .menu_btn__burger.open::after {
+    width: 28px;
+    transform: rotate(-45deg) translate(3px, -7px);
+  }
+  
+  .trans {
+    transition: all 0.5s ease-in-out;
+  }
+
 .sm_screen {
     display: none;
+}
+
+.d_n {
+    display: none;
+    /* transition: all 0.5s 0.2s; */
+    /* top: -500px; */
+
 }
 
 @media screen and (max-width: 1111px) {
@@ -256,17 +314,51 @@ table input {
         height: 60px;
         background-color: #FFFFFF;
         display: flex;
-        justify-content: space-between;
+        justify-content: end;
+        align-items: center;
         padding: 20px;
         box-shadow: 0px 3px 5px rgba(184, 184, 184, 0.27);
         z-index: 10;
     }
+    
+    .sm_container {
+        position: absolute;
+        visibility: visible;
+        width: 100%;
+        z-index: -1;
+        background: #FFFFFF;
+        /* top: 70px; */
+    }
+
+    .main_container {
+        /* margin: 15px; */
+        padding: 15;
+        margin-top: 60px;
+    }
 }
 
-.sm_container {
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-    background: #FFFFFF;
-    /* top: 70px; */
+
+@media screen and (max-width: 860px) {
+    .sub_main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .table_resp {
+        width: inherit;
+        overflow-x: scroll;
+    }
+
+    /* .sd1 {
+        width: 100%;
+    } */
+
+}
+
+@media screen and (max-width: 500px) {
+
+    .sd1 {
+        width: 100%;
+    }
 }
