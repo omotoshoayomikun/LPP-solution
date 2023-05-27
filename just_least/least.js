@@ -243,7 +243,6 @@ function findLeastCostPath(westCosts, supply, demand) {
 
 
     container2.innerHTML = `<div class="span-text">Least Cost Rule Ans:  ${totalCost}</div>`
-    container2.innerHTML += `<div class="span-text">Stepping Stone Ans: ${totalCost}</div>`
 
 
     return {

@@ -121,80 +121,6 @@ function Cal() {
 }
 
 
-// FUNCTION USE TO GET THE STEPPING STONE
-// Function to find the least cost path considering supply and demand constraints
-
-function findLeastCostPath(costMatrix, supply, demand) {
-
-    const numRows = supply.length;
-    const numCols = demand.length;
-
-    // Initialize an empty allocation matrix
-    const allocation = [];
-    for (let i = 0; i < numRows; i++) {
-        allocation[i] = new Array(numCols).fill(0);
-    }
-
-    // Allocate the available supply based on the least cost rule
-    while (true) {
-        let minCost = Infinity;
-        let minRow = -1;
-        let minCol = -1;
-
-        // Find the cell with the least cost
-        for (let i = 0; i < numRows; i++) {
-            for (let j = 0; j < numCols; j++) {
-                if (supply[i] > 0 && demand[j] > 0 && costMatrix[i][j] < minCost) {
-                    minCost = costMatrix[i][j];
-                    minRow = i;
-                    minCol = j;
-                }
-            }
-        }
-
-        // If no cell with supply and demand is found, exit the loop
-        if (minRow === -1 || minCol === -1) {
-            break;
-        }
-
-        // Allocate supply to the cell with the least cost
-        const allocationQuantity = Math.min(supply[minRow], demand[minCol]);
-        allocation[minRow][minCol] = allocationQuantity;
-
-        // Update the remaining supply and demand
-        supply[minRow] -= allocationQuantity;
-        demand[minCol] -= allocationQuantity;
-    }
-
-    // Calculate the total cost
-
-
-
-    let totalCost = 0;
-    for (let i = 0; i < numRows; i++) {
-        for (let j = 0; j < numCols; j++) {
-
-            totalCost += costMatrix[i][j] * allocation[i][j];
-        }
-    }
-
-
-    
-    const cont2_div = document.createElement('div');
-
-    container2.innerHTML += `<div class="span-text">Stepping Stone Ans:  ${totalCost}</div>`
-
-    return {
-        allocation,
-        totalCost
-    };
-
-    let sum = 0;
-
-
-}
-
-
 function northWestCornerMethod(supply, demand, cost) {
     const supplyLength = supply.length;
     const demandLength = demand.length;
@@ -247,10 +173,6 @@ function northWestCornerMethod(supply, demand, cost) {
     total_dis.innerHTML += vvv.slice(0, -1)
 
     container2.innerHTML = `<div class="span-text">North West Ans:  ${sum}</div>`
-
-
-
-    findLeastCostPath(westCosts, staySupply, stayDemand);
 
 
 
