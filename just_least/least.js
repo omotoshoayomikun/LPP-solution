@@ -294,14 +294,24 @@ function Solve() {
 
     }
 
-    findLeastCostPath(westCosts, westSupply, westDemand);
+    
+    let totalDemand = 0
+    let totalSupply = 0
+
+    for (demand of stayDemand) {
+        totalDemand += demand
+    }
+
+    for (supply of staySupply) {
+        totalSupply += supply
+    }
+
+    if (totalDemand !== totalSupply) {
+        alert('Error: Either Supply is greater then Demand  or vise versa')
+    } else {
+        findLeastCostPath(westCosts, westSupply, westDemand);  
+    }
 
 
-    // console.log({ 'allocation': allocation });
-    console.log({ 'westcost': westCosts });
-    console.log({ 'demand': westDemand });
-    console.log({ 'westSupply': westSupply });
-
-    // northWestCornerMethod(westSupply, westDemand, westCosts)
 
 }

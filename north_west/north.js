@@ -374,7 +374,26 @@ function Solve() {
 
     }
 
-    northWestCornerMethod(westSupply, westDemand, westCosts)
+    
+    let totalDemand = 0
+    let totalSupply = 0
+
+    for (demand of stayDemand) {
+        totalDemand += demand
+    }
+
+    for (supply of staySupply) {
+        totalSupply += supply
+    }
+
+    if (totalDemand !== totalSupply) {
+        alert('Error: Either Supply is greater then Demand  or vise versa')
+    } else {
+        northWestCornerMethod(westSupply, westDemand, westCosts)
+
+    }
+
+    // northWestCornerMethod(westSupply, westDemand, westCosts)
 
 }
 
