@@ -17,6 +17,8 @@ let staySupply = [];
 let stayDemand = [];
 let westCosts = [];
 let allocation;
+let dummyD = false;
+let dummyS = false;
 
 function Cal() {
 
@@ -27,95 +29,95 @@ function Cal() {
     const supply = parseInt(supplyInput.value, 10);
     const demand = parseInt(demandInput.value, 10);
 
-    if(supplyInput.value == '' || demandInput.value == '') {
+    if (supplyInput.value == '' || demandInput.value == '') {
         alert('Please Input Rows and Columns')
     } else {
-        
-            const numRow = supply + 2;
-            const numCol = demand + 2;
-        
-        
-            // Initialize costs and allocations arrays
-            for (let i = 0; i < numRow; i++) {
-                costs.push([]);
-                // allocations.push([]);
-                for (let j = 0; j < numCol; j++) {
-                    costs[i][j] = 0;
-                    // allocations[i][j] = 0;
-                }
+
+        const numRow = supply + 2;
+        const numCol = demand + 2;
+
+
+        // Initialize costs and allocations arrays
+        for (let i = 0; i < numRow; i++) {
+            costs.push([]);
+            // allocations.push([]);
+            for (let j = 0; j < numCol; j++) {
+                costs[i][j] = 0;
+                // allocations[i][j] = 0;
             }
-        
-            // Create the table
-        
-            for (let i = 0; i < numRow; i++) {
-                const row = table.insertRow()
-        
-                for (let j = 0; j < numCol; j++) {
-        
-                    const cell = row.insertCell()
-        
-                    if (i === 0 && j > 0 && j < numCol - 1) {
-                        cell.innerHTML = 'D' + j;
-                    }
-        
-                    if (i > 0 && i < numRow - 1 && j === 0) {
-                        cell.innerHTML = 'S' + i
-                    }
-        
-                    if (j === numCol - 1 && i === 0) {
-                        cell.innerHTML = 'Supply'
-                    }
-                    if (j === 0 && i === numRow - 1) {
-                        cell.innerHTML = 'Demand'
-                    }
-                    if (i === numRow - 1 && j === numCol - 1) {
-                        // Total
-                        cell.innerHTML = ''
-                    }
-        
-        
-                    if (i === numRow - 1 && j > 0 && j < numCol - 1) {
-                        const input = document.createElement('input');
-                        console.dir(input)
-                        input.type = 'number';
-                        input.size = 5;
-                        cell.appendChild(input)
-        
-                        input.addEventListener('input', function () {
-                            costs[i][j] = parseInt(input.value, 10) || 0;
-                        })
-                    }
-        
-                    if (j === numCol - 1 && i > 0 && i < numRow - 1) {
-                        const input = document.createElement('input');
-                        input.type = 'number';
-                        input.size = 5;
-                        cell.appendChild(input)
-        
-                        input.addEventListener('input', function () {
-                            costs[i][j] = parseInt(input.value, 10) || 0;
-                        })
-                    }
-        
-                    if (i > 0 && j > 0 && i < numRow - 1 && j < numCol - 1) {
-                        const input = document.createElement('input');
-                        input.type = 'number';
-                        input.size = 5;
-                        cell.appendChild(input)
-        
-                        input.addEventListener('input', function () {
-                            costs[i][j] = parseInt(input.value, 10) || 0;
-                        })
-                    }
-        
+        }
+
+        // Create the table
+
+        for (let i = 0; i < numRow; i++) {
+            const row = table.insertRow()
+
+            for (let j = 0; j < numCol; j++) {
+
+                const cell = row.insertCell()
+
+                if (i === 0 && j > 0 && j < numCol - 1) {
+                    cell.innerHTML = 'D' + j;
                 }
+
+                if (i > 0 && i < numRow - 1 && j === 0) {
+                    cell.innerHTML = 'S' + i
+                }
+
+                if (j === numCol - 1 && i === 0) {
+                    cell.innerHTML = 'Supply'
+                }
+                if (j === 0 && i === numRow - 1) {
+                    cell.innerHTML = 'Demand'
+                }
+                if (i === numRow - 1 && j === numCol - 1) {
+                    // Total
+                    cell.innerHTML = ''
+                }
+
+
+                if (i === numRow - 1 && j > 0 && j < numCol - 1) {
+                    const input = document.createElement('input');
+                    console.dir(input)
+                    input.type = 'number';
+                    input.size = 5;
+                    cell.appendChild(input)
+
+                    input.addEventListener('input', function () {
+                        costs[i][j] = parseInt(input.value, 10) || 0;
+                    })
+                }
+
+                if (j === numCol - 1 && i > 0 && i < numRow - 1) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.size = 5;
+                    cell.appendChild(input)
+
+                    input.addEventListener('input', function () {
+                        costs[i][j] = parseInt(input.value, 10) || 0;
+                    })
+                }
+
+                if (i > 0 && j > 0 && i < numRow - 1 && j < numCol - 1) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.size = 5;
+                    cell.appendChild(input)
+
+                    input.addEventListener('input', function () {
+                        costs[i][j] = parseInt(input.value, 10) || 0;
+                    })
+                }
+
             }
-        
-            // button.innerHTML = 'Solve';
-        
-            container.innerHTML = `<button id='button'>Solve</button>`
-            const button = document.getElementById('button');
-            button.addEventListener('click', Solve)
+        }
+
+        // button.innerHTML = 'Solve';
+
+        container.innerHTML = `<button id='button'>Solve</button>`
+        const button = document.getElementById('button');
+        button.addEventListener('click', Solve)
 
     }
 }
@@ -179,7 +181,7 @@ function findLeastCostPath(costMatrix, supply, demand) {
     }
 
 
-    
+
     const cont2_div = document.createElement('div');
 
     container2.innerHTML += `<div class="span-text">Stepping Stone Ans:  ${totalCost}</div>`
@@ -233,17 +235,18 @@ function northWestCornerMethod(supply, demand, cost) {
     total_dis.innerHTML += 'Total: '
 
     for (let i = 0; i < westCosts.length; i++) {
-        for (let j = 0; j < allocation.length; j++) {
-            if(westCosts[i][j] != 0) {
+        for (let j = 0; j < westCosts[i].length; j++) {
+            if (westCosts[i][j] !== 0) {
                 vvv += ('( ' + westCosts[i][j] + ' * ' + allocation[i][j] + ' )' + '+');
+
+                sum += westCosts[i][j] * allocation[i][j]
             }
 
-            sum += westCosts[i][j] * allocation[i][j]
 
         }
 
     }
-    
+
     total_dis.innerHTML += vvv.slice(0, -1)
 
     container2.innerHTML = `<div class="span-text">North West Ans:  ${sum}</div>`
@@ -287,10 +290,18 @@ function northWestTable(supply, demand, cost, allocation) {
             const cell = row.insertCell()
 
             if (i === 0 && j > 0 && j < numCol - 1) {
+                // if (dummyD === true && j == numCol - 2) {
+                //     cell.innerHTML = 'Dummy'
+
+                // }
                 cell.innerHTML = 'D' + j
             }
 
             if (i > 0 && i < numRow - 1 && j === 0) {
+                // if (dummyS === true && i == numRow - 2) {
+                //     cell.innerHTML = 'Dummy'
+
+                // }
                 cell.innerHTML = 'S' + i
             }
 
@@ -374,7 +385,9 @@ function Solve() {
 
     }
 
-    
+
+
+
     let totalDemand = 0
     let totalSupply = 0
 
@@ -387,14 +400,97 @@ function Solve() {
     }
 
     if (totalDemand !== totalSupply) {
-        alert('Error: Either Supply is greater then Demand  or vise versa')
-    } else {
-        northWestCornerMethod(westSupply, westDemand, westCosts)
+        if (totalSupply > totalDemand) {
+            for (let i = 0; i < costs.length; i++) {
 
+                if (i < costs.length - 1) {
+                    costs[i].splice(costs[i].length - 1, 0, 0)
+                } else {
+                    costs[i].splice(costs[i].length - 1, 0, totalSupply - totalDemand)
+                }
+
+            }
+
+            dummyD = true;
+
+        }
+
+        if (totalDemand > totalSupply) {
+
+            let ddd = []
+            for (let i = 0; i < costs.length; i++) {
+                ddd = new Array(costs[i].length).fill(0)
+            }
+
+            costs.splice(costs.length - 1, 0, ddd)
+
+            for (let i = 0; i < costs.length; i++) {
+                if (i == costs.length - 2) {
+                    costs[i][costs[i].length - 1] = totalDemand - totalSupply
+                }
+
+            }
+
+            dummyS = true
+
+        }
+
+
+
+        westCosts = [];
+        westSupply = [];
+        westDemand = [];
+        staySupply = [];
+        stayDemand = [];
+
+        let counter = 0;
+
+
+        for (i = 0; i < costs.length; i++) {
+
+            if (i > 0 && i < costs.length - 1) {
+                westCosts.push([])
+                counter++
+            }
+
+            for (let j = 0; j < costs[i].length; j++) {
+
+                // TO FIND THE SUPPLY OUT OF THE ARRAY
+                if (i > 0 && i < costs.length - 1 && j === costs[i].length - 1) {
+                    westSupply.push(costs[i][j])
+                    staySupply.push(costs[i][j])
+                }
+
+                // TO FIND THE DEMAND OUT OF THE ARRAY
+                if (i > 0 && i === costs.length - 1 && j > 0 && j < costs[i].length - 1) {
+                    westDemand.push(costs[i][j])
+                    stayDemand.push(costs[i][j])
+                }
+
+                // TO FIND THE REAL COST OUT OF THE ARRAY
+
+                if (i > 0 && i < costs.length - 1 && j > 0 && j < costs[i].length - 1) {
+                    westCosts[counter - 1].push(costs[i][j])
+                }
+
+            }
+
+        }
+
+
+
+        // northWestCornerMethod(westSupply, westDemand, westCosts)
     }
+    //  else {
+    // console.log('it the same')
+    northWestCornerMethod(westSupply, westDemand, westCosts)
 
+    // }
+
+    console.log(costs)
     // northWestCornerMethod(westSupply, westDemand, westCosts)
 
 }
+
 
 
