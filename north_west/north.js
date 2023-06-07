@@ -433,49 +433,48 @@ function Solve() {
 
             dummyS = true
 
-        }
-
-
-
-        westCosts = [];
-        westSupply = [];
-        westDemand = [];
-        staySupply = [];
-        stayDemand = [];
-
-        let counter = 0;
-
-
-        for (i = 0; i < costs.length; i++) {
-
-            if (i > 0 && i < costs.length - 1) {
-                westCosts.push([])
-                counter++
+            westCosts = [];
+            westSupply = [];
+            westDemand = [];
+            staySupply = [];
+            stayDemand = [];
+    
+            let counter = 0;
+    
+    
+            for (i = 0; i < costs.length; i++) {
+    
+                if (i > 0 && i < costs.length - 1) {
+                    westCosts.push([])
+                    counter++
+                }
+    
+                for (let j = 0; j < costs[i].length; j++) {
+    
+                    // TO FIND THE SUPPLY OUT OF THE ARRAY
+                    if (i > 0 && i < costs.length - 1 && j === costs[i].length - 1) {
+                        westSupply.push(costs[i][j])
+                        staySupply.push(costs[i][j])
+                    }
+    
+                    // TO FIND THE DEMAND OUT OF THE ARRAY
+                    if (i > 0 && i === costs.length - 1 && j > 0 && j < costs[i].length - 1) {
+                        westDemand.push(costs[i][j])
+                        stayDemand.push(costs[i][j])
+                    }
+    
+                    // TO FIND THE REAL COST OUT OF THE ARRAY
+    
+                    if (i > 0 && i < costs.length - 1 && j > 0 && j < costs[i].length - 1) {
+                        westCosts[counter - 1].push(costs[i][j])
+                    }
+    
+                }
+    
             }
 
-            for (let j = 0; j < costs[i].length; j++) {
-
-                // TO FIND THE SUPPLY OUT OF THE ARRAY
-                if (i > 0 && i < costs.length - 1 && j === costs[i].length - 1) {
-                    westSupply.push(costs[i][j])
-                    staySupply.push(costs[i][j])
-                }
-
-                // TO FIND THE DEMAND OUT OF THE ARRAY
-                if (i > 0 && i === costs.length - 1 && j > 0 && j < costs[i].length - 1) {
-                    westDemand.push(costs[i][j])
-                    stayDemand.push(costs[i][j])
-                }
-
-                // TO FIND THE REAL COST OUT OF THE ARRAY
-
-                if (i > 0 && i < costs.length - 1 && j > 0 && j < costs[i].length - 1) {
-                    westCosts[counter - 1].push(costs[i][j])
-                }
-
-            }
-
         }
+
 
 
 

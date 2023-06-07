@@ -160,14 +160,25 @@ button {
 }
 
 .ttx {
-    font-size: 40px;
+   
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 95vh;
+    
+}
+
+.txt1 {
+    font-size: 40px;
     font-weight: bold;
-    text-shadow: 3px 3px 4px #111111a2;
+    text-shadow: 2px 2px 4px #1111115e;
+    margin-bottom: 20px;
+}
+
+.txt2 {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 

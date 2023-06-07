@@ -258,8 +258,8 @@ function Solve() {
     westCosts = [];
     westSupply = [];
     westDemand = [];
-    stayDemand = [];
-    staySupply = []
+    staySupply = [];
+    stayDemand = []
 
     let counter = 0;
 
@@ -294,7 +294,9 @@ function Solve() {
 
     }
 
-    
+
+
+
     let totalDemand = 0
     let totalSupply = 0
 
@@ -307,11 +309,83 @@ function Solve() {
     }
 
     if (totalDemand !== totalSupply) {
-        alert('Error: Either Supply is greater then Demand  or vise versa')
-    } else {
-        findLeastCostPath(westCosts, westSupply, westDemand);  
+        if (totalSupply > totalDemand) {
+            for (let i = 0; i < costs.length; i++) {
+
+                if (i < costs.length - 1) {
+                    costs[i].splice(costs[i].length - 1, 0, 0)
+                } else {
+                    costs[i].splice(costs[i].length - 1, 0, totalSupply - totalDemand)
+                }
+
+            }
+
+            // dummyD = true;
+
+        }
+
+        if (totalDemand > totalSupply) {
+
+            let ddd = []
+            for (let i = 0; i < costs.length; i++) {
+                ddd = new Array(costs[i].length).fill(0)
+            }
+
+            costs.splice(costs.length - 1, 0, ddd)
+
+            for (let i = 0; i < costs.length; i++) {
+                if (i == costs.length - 2) {
+                    costs[i][costs[i].length - 1] = totalDemand - totalSupply
+                }
+
+            }
+
+            // dummyS = true
+
+            westCosts = [];
+            westSupply = [];
+            westDemand = [];
+            staySupply = [];
+            stayDemand = [];
+
+            let counter = 0;
+
+
+            for (i = 0; i < costs.length; i++) {
+
+                if (i > 0 && i < costs.length - 1) {
+                    westCosts.push([])
+                    counter++
+                }
+
+                for (let j = 0; j < costs[i].length; j++) {
+
+                    // TO FIND THE SUPPLY OUT OF THE ARRAY
+                    if (i > 0 && i < costs.length - 1 && j === costs[i].length - 1) {
+                        westSupply.push(costs[i][j])
+                        staySupply.push(costs[i][j])
+                    }
+
+                    // TO FIND THE DEMAND OUT OF THE ARRAY
+                    if (i > 0 && i === costs.length - 1 && j > 0 && j < costs[i].length - 1) {
+                        westDemand.push(costs[i][j])
+                        stayDemand.push(costs[i][j])
+                    }
+
+                    // TO FIND THE REAL COST OUT OF THE ARRAY
+
+                    if (i > 0 && i < costs.length - 1 && j > 0 && j < costs[i].length - 1) {
+                        westCosts[counter - 1].push(costs[i][j])
+                    }
+
+                }
+
+            }
+
+        }
+
     }
 
-
+    findLeastCostPath(westCosts, westSupply, westDemand);
 
 }
